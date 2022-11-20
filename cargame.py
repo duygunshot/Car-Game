@@ -48,7 +48,7 @@ def game_loop():
     gameExit = False
 
     while not gameExit:#run until crashed
-        for event in pygame.event.get():#get input
+        for event in pygame.event.get():#get event interactions
         
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -68,14 +68,14 @@ def game_loop():
         x += x_change
     
     
-        gameDisplay.fill(white)
+        gameDisplay.fill(white)#Fill display with color
         car(x,y)
         
-        if x > display_width - car_width or x < 0:
+        if x > display_width - car_width or x < 0:#crash if car touchs boundaries
             crash()
     
-        pygame.display.update()
-        clock.tick(60)
+        pygame.display.update()#update display 
+        clock.tick(60)#set fps
 
 game_loop()
 pygame.quit()
