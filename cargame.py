@@ -37,7 +37,7 @@ def message_display(text):#Display message when crash
     
     game_loop()# Start game again
     
-def crash():
+def crash():#display text when crash
     message_display("Crashed!!!")
     
 def game_loop():
