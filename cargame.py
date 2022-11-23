@@ -76,9 +76,9 @@ def game_loop():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    x_change = -5
+                    x_change = -7
                 elif event.key == pygame.K_RIGHT:
-                    x_change = 5
+                    x_change = 7
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -104,8 +104,8 @@ def game_loop():
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
             dodged += 1
-            thing_speed += 1
-            thing_width += (dodged * 1.2)
+            thing_speed += 0.5
+            thing_width += (dodged * 1.1)
         
             
         if y < thing_starty + thing_height:# if car y collides with object y 
