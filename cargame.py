@@ -12,8 +12,10 @@ pygame.display.set_caption('Racer')#caption of display
 
 black = (0,0,0)
 white = (255,255,255)
-red = (255,0,0)
-green = (0,255,0)
+red = (200,0,0)
+bright_red = (255,0,0)
+bright_green = (0,255,0)
+green = (0,200,0)
 blue = (0,0,255)
 car_speed = 0
 car_width = 73
@@ -51,23 +53,56 @@ def message_display(text):#Display message when crash
 def crash():#display text when crash
     message_display("Crashed!!!")
 
+def button(msg,x,y,w,h,ic,ac):#create button function
+    """msg: What you want the button to say on it.
+
+        x: The x location of the top left coordinate of the button box.
+
+        y: The y location of the top left coordinate of the button box.
+
+        w: Button width.
+
+        h: Button height.
+
+        ic: Inactive color (when a mouse is not hovering).
+
+        ac: Active color (when a mouse is hovering)."""
+    mouse = pygame.mouse.get_pos()#get mouse position
+
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:#if mouse at the button position
+        pygame.draw.rect(gameDisplay, ac, (x,y,w,h))#display bright color for the button
+    else:
+        pygame.draw.rect(gameDisplay, ic, (x,y,w,h))#display dark color for the button
+
+    smallText = pygame.font.Font("freesansbold.ttf", 20)#font for small text
+    TextSurf, TextRect = text_objects(msg, smallText)#add text and font
+    TextRect.center = ((x + (w / 2)), (y + (h / 2 )))#text postition
+    gameDisplay.blit(TextSurf, TextRect)#display text
+
 def game_intro():
     intro = True
 
-    while intro:
-        for event in pygame.event.get():
+    while intro:#run until crashed
+        for event in pygame.event.get():#events logged
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
-        gameDisplay.fill(white)
-        largeText = pygame.font.Font('freesansbold.ttf',115)
-        TextSurf, TextRect = text_objects("Racer", largeText)
-        TextRect.center = ((display_width / 2), (display_height / 2))
-        gameDisplay.blit(TextSurf, TextRect)
-        pygame.display.update()
-        clock.tick(15)        
+        gameDisplay.fill(white)#fill the display with white color
+        largeText = pygame.font.Font('freesansbold.ttf',115)#font for large text
+        TextSurf, TextRect = text_objects("Racer", largeText)#add text and font
+        TextRect.center = ((display_width / 2), (display_height / 2))#title position
+        gameDisplay.blit(TextSurf, TextRect)#display title
+
+        button("Play",150, 450, 100, 50, green, bright_green)
+
+        button("Quit",550, 450, 100, 50, red, bright_red)
+
+        #pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))#display red color for the button
+
+        pygame.display.update()#update display
+        clock.tick(15)#menu fps        
 
     
 def game_loop():
