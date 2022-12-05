@@ -13,6 +13,8 @@ pygame.display.set_caption('Racer')#caption of display
 black = (0,0,0)
 white = (255,255,255)
 red = (255,0,0)
+green = (0,255,0)
+blue = (0,0,255)
 car_speed = 0
 car_width = 73
 
@@ -48,6 +50,25 @@ def message_display(text):#Display message when crash
     
 def crash():#display text when crash
     message_display("Crashed!!!")
+
+def game_intro():
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf',115)
+        TextSurf, TextRect = text_objects("Racer", largeText)
+        TextRect.center = ((display_width / 2), (display_height / 2))
+        gameDisplay.blit(TextSurf, TextRect)
+        pygame.display.update()
+        clock.tick(15)        
+
     
 def game_loop():
     x = (display_width * 0.45)
@@ -68,7 +89,7 @@ def game_loop():
     gameExit = False
 
     while not gameExit:#run until crashed
-        for event in pygame.event.get():#get event interactions
+        for event in pygame.event.get():#events logged
         
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -116,6 +137,7 @@ def game_loop():
         pygame.display.update()#update display 
         clock.tick(60)#set fps
 
+game_intro()
 game_loop()
 pygame.quit()
 quit()
