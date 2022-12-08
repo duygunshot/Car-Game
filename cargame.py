@@ -162,7 +162,6 @@ def game_intro():
         pygame.display.update()#update display
         clock.tick(15)#menu fps        
 
-    
 def game_loop():
     pygame.mixer.music.load("jazz2.wav")#load music
     pygame.mixer.music.play(-1)#play music until stop
@@ -207,10 +206,7 @@ def game_loop():
                     x_change = 0
                     pause = False
                     
-                
-    
         x += x_change
-    
     
         gameDisplay.fill(white)#Fill display with color
         
@@ -231,7 +227,6 @@ def game_loop():
             thing_speed += 0.1
             thing_width += (dodged * 1.01)
         
-            
         if y < thing_starty + thing_height:# if car y collides with object y 
             print("y crossover")
             if x > thing_startx and x <thing_startx + thing_width or x + car_width > thing_startx and x + car_width < thing_startx + thing_width: #if car x collides with object x 
