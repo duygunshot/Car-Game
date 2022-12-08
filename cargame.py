@@ -4,6 +4,8 @@ import random
 
 pygame.init()
 
+crash_sound = pygame.mixer.Sound("crash.wav")
+
 display_width = 800
 display_height = 600
 gameDisplay = pygame.display.set_mode((display_width,display_height))#game resolution
@@ -52,6 +54,9 @@ def message_display(text):#Display message when crash
     game_loop()# Start game again
     
 def crash():#display text when crash
+    pygame.mixer.Sound.play(crash_sound)#play crash sound
+    pygame.mixer.music.stop()#stop music
+
     largeText = pygame.font.SysFont("comicsans", 115)#font for large text
     TextSurf, TextRect = text_objects("Crashed!!!", largeText)#add text and font
     TextRect.center = ((display_width / 2), (display_height / 2))#text position
@@ -105,6 +110,7 @@ def unpause():#unpause function
     pause = False
 
 def paused():#pause function
+    pygame.mixer.music.pause()#pause music
     largeText = pygame.font.SysFont("comicsansms", 115)#font for large text
     TextSurf, TextRect = text_objects("Paused", largeText)#add text and font
     TextRect.center = ((display_width / 2), (display_height / 2))#text position
@@ -131,6 +137,9 @@ def quitgame():#quit function
 def game_intro():
     intro = True
 
+    pygame.mixer.music.load("jazz.wav")#load music
+    pygame.mixer.music.play(-1)#play music until stop
+
     while intro:#run until crashed
         for event in pygame.event.get():#events logged
             print(event)
@@ -155,6 +164,10 @@ def game_intro():
 
     
 def game_loop():
+    global pause
+
+    pygame.mixer.music.load("jazz2.wav")#load music
+    pygame.mixer.music.play(-1)#play music until stop
     x = (display_width * 0.45)
     y = (display_height * 0.8)
     
