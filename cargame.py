@@ -164,10 +164,11 @@ def game_intro():
 
     
 def game_loop():
-    global pause
-
     pygame.mixer.music.load("jazz2.wav")#load music
     pygame.mixer.music.play(-1)#play music until stop
+
+    global pause
+
     x = (display_width * 0.45)
     y = (display_height * 0.8)
     
@@ -175,7 +176,7 @@ def game_loop():
     
     thing_startx = random.randrange(0, display_width)
     thing_starty = -600
-    thing_speed = 7
+    thing_speed = 4
     thing_width = 100
     thing_height = 100
     
@@ -227,8 +228,8 @@ def game_loop():
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
             dodged += 1
-            thing_speed += 0.5
-            thing_width += (dodged * 1.1)
+            thing_speed += 0.1
+            thing_width += (dodged * 1.01)
         
             
         if y < thing_starty + thing_height:# if car y collides with object y 
