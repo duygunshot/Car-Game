@@ -19,6 +19,7 @@ green = (0,200,0)
 blue = (0,0,255)
 car_speed = 0
 car_width = 73
+pause = True
 
 clock = pygame.time.Clock()#fps
 carImg = pygame.image.load('racecar.png')#get image
@@ -51,7 +52,23 @@ def message_display(text):#Display message when crash
     game_loop()# Start game again
     
 def crash():#display text when crash
-    message_display("Crashed!!!")
+    largeText = pygame.font.SysFont("comicsans", 115)#font for large text
+    TextSurf, TextRect = text_objects("Crashed!!!", largeText)#add text and font
+    TextRect.center = ((display_width / 2), (display_height / 2))#text position
+    gameDisplay.blit(TextSurf, TextRect)#display text
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        button("Try Again", 150, 450, 100, 50, green, bright_green,game_loop)#green try again button
+        button("Quit",550, 450, 100, 50, red, bright_red, quitgame)#red quit button
+
+        pygame.display.update()#update display
+        clock.tick()#display fps
+    #message_display("Crashed!!!")
 
 def button(msg,x,y,w,h,ic,ac, action = None):#create button function
     """msg: What you want the button to say on it.
@@ -83,6 +100,30 @@ def button(msg,x,y,w,h,ic,ac, action = None):#create button function
     TextRect.center = ((x + (w / 2)), (y + (h / 2 )))#text postition
     gameDisplay.blit(TextSurf, TextRect)#display text
 
+def unpause():#unpause function
+    global pause
+    pause = False
+
+def paused():#pause function
+    largeText = pygame.font.SysFont("comicsansms", 115)#font for large text
+    TextSurf, TextRect = text_objects("Paused", largeText)#add text and font
+    TextRect.center = ((display_width / 2), (display_height / 2))#text position
+    gameDisplay.blit(TextSurf, TextRect)#display text
+
+    while pause:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+        #gameDisplay.fill(white)#fill display with white
+
+        button("Continue", 150, 450, 100, 50, green, bright_green, unpause)#green pause button
+        button("Quit",550, 450, 100, 50, red, bright_red, quitgame)#red quit button
+
+        pygame.display.update()#update display
+        clock.tick(15)#display fps
+
 def quitgame():#quit function
     pygame.quit()
     quit()
@@ -103,9 +144,9 @@ def game_intro():
         TextRect.center = ((display_width / 2), (display_height / 2))#title position
         gameDisplay.blit(TextSurf, TextRect)#display title
 
-        button("Play",150, 450, 100, 50, green, bright_green,game_loop)#green buton
+        button("Play",150, 450, 100, 50, green, bright_green,game_loop)#green play buton
 
-        button("Quit",550, 450, 100, 50, red, bright_red, quitgame)#red button
+        button("Quit",550, 450, 100, 50, red, bright_red, quitgame)#red quit button
 
         #pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))#display red color for the button
 
@@ -141,12 +182,17 @@ def game_loop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     x_change = -7
-                elif event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     x_change = 7
+                if event.key == pygame.K_ESCAPE:
+                    pause = True
+                    paused()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     x_change = 0
+                    pause = False
+                    
                 
     
         x += x_change
